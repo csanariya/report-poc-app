@@ -59,7 +59,6 @@ export class EntityFieldsComponent implements OnInit {
       isOptional: field.isOptional
     };
     this.showAddForm = true;
-    
   }
 
   deleteField(field: EntityField): void {
