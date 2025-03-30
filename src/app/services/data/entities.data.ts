@@ -18,5 +18,65 @@ export const ENTITIES_DATA: Entity[] = [
     name: 'Product',
     parentId: null,
     description: 'Product information'
-  }
+  },
+  {
+    "id": 4,
+    "name": "Property",
+    "parentId": null,
+    "description": "All buildings"
+  },
+  {
+    "id": 5,
+    "name": "Unit",
+    "parentId": 4,
+    "description": "Individual units within a property"
+  },
+  {
+    "id": 6,
+    "name": "Property Manager",
+    "parentId": 4,
+    "description": "PMs managing properties"
+  },
+  {
+    "id": 7,
+    "name": "Rental Owner",
+    "parentId": 4,
+    "description": "People who own rental properties"
+  },
+  {
+    "id": 8,
+    "name": "Listings",
+    "parentId": 5,
+    "description": "Listing history for rental units"
+  },
+  {
+    "id": 9,
+    "name": "Leases",
+    "parentId": 5,
+    "description": "Leasing history for units"
+  },
+  {
+    "id": 10,
+    "name": "Tenants",
+    "parentId": 9,
+    "description": "Tenants tied to a lease"
+  },
+  {
+    "id": 11,
+    "name": "Vehicles",
+    "parentId": 10,
+    "description": "Vehicles tied to a tenant"
+  },
+  {
+    "id": 12,
+    "name": "Address",
+    "parentId": 4,
+    "description": ""
+  },
+  {
+    "id": 12,
+    "name": "Address",
+    "parentId": 5,
+    "description": ""
+  },
 ]; 
