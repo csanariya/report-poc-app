@@ -1,0 +1,100 @@
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Entity Fields</h2>
+    <button class="btn btn-primary" (click)="showAddForm = true">
+      Add Field
+    </button>
+  </div>
+
+  <div class="card mb-4" *ngIf="showAddForm">
+    <div class="card-header">
+      <h3 class="mb-0">{{ editingField ? 'Edit Field' : 'Add New Field' }}</h3>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="onSubmit()" class="form-container">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="entityId" class="form-label">Entity</label>
+            <select class="form-select" id="entityId" [(ngModel)]="fieldForm.entityId" name="entityId" required>
+              <option [ngValue]="0">Select an entity</option>
+              <option *ngFor="let entity of entities" [value]="entity.id">{{ entity.name }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fieldName" class="form-label">Field Name</label>
+            <input type="text" class="form-control" id="fieldName" [(ngModel)]="fieldForm.fieldName" name="fieldName" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" [(ngModel)]="fieldForm.description" name="description" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="dataType" class="form-label">Data Type</label>
+            <select class="form-select" id="dataType" [(ngModel)]="fieldForm.dataType" name="dataType" required>
+              <option value="string">String</option>
+              <option value="number">Number</option>
+              <option value="boolean">Boolean</option>
+              <option value="date">Date</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="isOptional" [(ngModel)]="fieldForm.isOptional" name="isOptional">
+              <label class="form-check-label" for="isOptional">Optional Field</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary">{{ editingField ? 'Update' : 'Add' }}</button>
+              <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Entity Name</th>
+              <th>Field Name</th>
+              <th>Description</th>
+              <th class="text-center">Data Type</th>
+              <th class="text-center">Optional</th>
+              <th class="actions-column">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let field of entityFields">
+              <td>{{ field.entityName }}</td>
+              <td>{{ field.fieldName }}</td>
+              <td>{{ field.description }}</td>
+              <td class="text-center"><span class="badge" [attr.data-type]="field.dataType">{{ field.dataType }}</span></td>
+              <td class="text-center"><span class="badge" [attr.data-optional]="field.isOptional">{{ field.isOptional ? 'Optional' : 'Required' }}</span></td>
+              <td class="actions-column">
+                <div class="d-flex gap-2 justify-content-center">
+                  <button class="btn btn-sm btn-outline-primary" (click)="editField(field)">Edit</button>
+                  <button class="btn btn-sm btn-outline-danger" (click)="deleteField(field)">Delete</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div> 
