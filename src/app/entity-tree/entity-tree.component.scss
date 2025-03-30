@@ -1,0 +1,62 @@
+.tree-view {
+  margin-top: 20px;
+}
+
+.tree-node {
+  margin: 5px 0;
+}
+
+.entity-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.toggle-icon {
+  margin-right: 8px;
+  font-size: 12px;
+  color: #666;
+}
+
+.level-label {
+  margin-right: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+  min-width: 24px;
+}
+
+.entity-name {
+  font-size: 14px;
+}
+
+.children {
+  margin-left: 20px;
+  border-left: 1px solid #ddd;
+  padding-left: 10px;
+}
+
+.child-node {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    width: 20px;
+    height: 1px;
+    background-color: #ddd;
+  }
+}
+
+.grandchild-node {
+  margin-left: 10px;
+} 

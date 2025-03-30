@@ -1,0 +1,28 @@
+<div class="container mt-4">
+  <h2>Entity Tree (Heirarchy)</h2>
+  <div class="tree-view">
+    <div *ngFor="let root of rootNodes" class="tree-node">
+      <div class="entity-item" (click)="toggleNode(root)">
+        <span class="toggle-icon">{{ root.children.length ? (root.expanded ? '▼' : '▶') : '' }}</span>
+        <span class="level-label">{{ getLevelLabel(root.level) }}</span>
+        <span class="entity-name" [style.color]="getLevelColor(root.level)">{{ root.entity.name }}</span>
+      </div>
+      <div class="children" *ngIf="root.expanded">
+        <ng-container *ngTemplateOutlet="nodeTemplate; context: { $implicit: root.children }"></ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #nodeTemplate let-nodes>
+  <div *ngFor="let node of nodes" class="tree-node child-node">
+    <div class="entity-item" (click)="toggleNode(node)">
+      <span class="toggle-icon">{{ node.children.length ? (node.expanded ? '▼' : '▶') : '⬤' }}</span>
+      <span class="level-label">{{ getLevelLabel(node.level) }}</span>
+      <span class="entity-name" [style.color]="getLevelColor(node.level)">{{ node.entity.name }}</span>
+    </div>
+    <div class="children" *ngIf="node.expanded">
+      <ng-container *ngTemplateOutlet="nodeTemplate; context: { $implicit: node.children }"></ng-container>
+    </div>
+  </div>
+</ng-template> 

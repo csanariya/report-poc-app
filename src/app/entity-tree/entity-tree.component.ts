@@ -7,77 +7,15 @@ interface TreeNode {
   entity: Entity;
   children: TreeNode[];
   expanded: boolean;
+  level: number;
 }
 
 @Component({
   selector: 'app-entity-tree',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <div class="container mt-4">
-      <h2>Entity Hierarchy</h2>
-      <div class="tree-view">
-        <div *ngFor="let root of rootNodes" class="tree-node">
-          <div class="entity-item" (click)="toggleNode(root)">
-            <span class="toggle-icon">{{ root.children.length ? (root.expanded ? '▼' : '▶') : '' }}</span>
-            <span class="entity-name">{{ root.entity.name }}</span>
-          </div>
-          <div class="children" *ngIf="root.expanded">
-            <div *ngFor="let child of root.children" class="tree-node child-node">
-              <div class="entity-item" (click)="toggleNode(child)">
-                <span class="toggle-icon">{{ child.children.length ? (child.expanded ? '▼' : '▶') : '' }}</span>
-                <span class="entity-name">{{ child.entity.name }}</span>
-              </div>
-              <div class="children" *ngIf="child.expanded">
-                <div *ngFor="let grandChild of child.children" class="tree-node grandchild-node">
-                  <div class="entity-item">
-                    <span class="entity-name">{{ grandChild.entity.name }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `,
-  styles: [`
-    .tree-view {
-      margin-top: 20px;
-    }
-    .tree-node {
-      margin: 5px 0;
-    }
-    .entity-item {
-      display: flex;
-      align-items: center;
-      padding: 8px;
-      cursor: pointer;
-      border-radius: 4px;
-      transition: background-color 0.2s;
-    }
-    .entity-item:hover {
-      background-color: #f5f5f5;
-    }
-    .toggle-icon {
-      margin-right: 8px;
-      font-size: 12px;
-      color: #666;
-    }
-    .entity-name {
-      font-size: 14px;
-    }
-    .children {
-      margin-left: 20px;
-      border-left: 1px solid #ddd;
-    }
-    .child-node {
-      margin-left: 10px;
-    }
-    .grandchild-node {
-      margin-left: 10px;
-    }
-  `]
+  templateUrl: './entity-tree.component.html',
+  styleUrls: ['./entity-tree.component.scss']
 })
 export class EntityTreeComponent implements OnInit {
   entities: Entity[] = [];
@@ -104,22 +42,40 @@ export class EntityTreeComponent implements OnInit {
     // Build the tree structure
     this.rootNodes = this.entities
       .filter(entity => entity.parentId === null)
-      .map(entity => this.createTreeNode(entity, entityMap));
+      .map(entity => this.createTreeNode(entity, entityMap, 1));
   }
 
-  createTreeNode(entity: Entity, entityMap: Map<number, Entity>): TreeNode {
+  createTreeNode(entity: Entity, entityMap: Map<number, Entity>, level: number): TreeNode {
     const children = this.entities
       .filter(e => e.parentId === entity.id)
-      .map(child => this.createTreeNode(child, entityMap));
+      .map(child => this.createTreeNode(child, entityMap, level + 1));
 
     return {
       entity,
       children,
-      expanded: true
+      expanded: true,
+      level
     };
   }
 
   toggleNode(node: TreeNode): void {
     node.expanded = !node.expanded;
+  }
+
+  getLevelLabel(level: number): string {
+    return `L${level}`;
+  }
+
+  getLevelColor(level: number): string {
+    const colors = [
+      '#000000', // Level 1 - Black
+      '#2E7D32', // Level 2 - Green
+      '#1976D2', // Level 3 - Blue
+      '#9C27B0', // Level 4 - Purple
+      '#F57C00', // Level 5 - Orange
+      '#D32F2F', // Level 6 - Red
+      '#455A64'  // Level 7 - Dark Grey
+    ];
+    return colors[level - 1] || '#000000';
   }
 } 
