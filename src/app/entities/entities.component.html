@@ -50,11 +50,11 @@
         <!-- Fields Preview Section -->
         <div class="mt-4" *ngIf="editingEntity">
           <h6 class="mb-3">Entity Fields</h6>
-          <div class="d-flex flex-wrap gap-1">
-            <span *ngFor="let field of getEntityFields(editingEntity.id)" 
-                  class="badge" 
-                  [attr.data-type]="field.dataType">
-              {{ field.fieldName }}
+          <div class="d-flex flex-wrap gap-2">
+            <span *ngFor="let field of getEntityFields(editingEntity.id)" class="field-item">
+              <span class="badge" [attr.data-type]="field.dataType">{{ field.fieldName }}
+                <!--<span class="badge" [attr.data-optional]="field.isRequired">{{ field.isRequired ? 'N' : 'Y' }}</span>-->
+              </span>
             </span>
           </div>
         </div>
@@ -81,11 +81,11 @@
               <td>{{ getParentName(entity.parentId) }}</td>
               <td>{{ entity.description }}</td>
               <td>
-                <div class="d-flex flex-wrap gap-1">
-                  <span *ngFor="let field of getEntityFields(entity.id)" 
-                        class="badge" 
-                        [attr.data-type]="field.dataType">
-                    {{ field.fieldName }}
+                <div class="d-flex flex-wrap gap-2">
+                  <span *ngFor="let field of getEntityFields(entity.id)" class="field-item">
+                    <span class="badge" [attr.data-type]="field.dataType">{{ field.fieldName }}
+                      <!--<span class="badge" [attr.data-optional]="field.isRequired">{{ field.isRequired ? 'N' : 'Y' }}</span>-->
+                    </span>
                   </span>
                 </div>
               </td>

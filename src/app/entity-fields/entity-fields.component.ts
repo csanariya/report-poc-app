@@ -1,124 +1,124 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { EntityService } from '../services/entity.service';
 import { Entity, EntityField } from '../shared/models/entity.interface';
 
 @Component({
   selector: 'app-entity-fields',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './entity-fields.component.html'
+  imports: [CommonModule],
+  template: `
+    <div class="container mt-4">
+      <h2>Entity Fields</h2>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Fields</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entity of entities">
+              <td>
+                <div class="entity-name">{{ entity.name }}</div>
+                <div class="entity-description">{{ entity.description }}</div>
+              </td>
+              <td>
+                <div class="fields-container">
+                  <div *ngFor="let field of entity.fields" class="field-item">
+                    <span class="field-name">{{ field.fieldName }}</span>
+                    <span class="badge" [attr.data-type]="field.dataType">{{ field.dataType }}</span>
+                    <span class="badge" [attr.data-optional]="field.isRequired">{{ field.isRequired ? 'Required' : 'Optional' }}</span>
+                    <span class="field-description">{{ field.description }}</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `,
+  styles: [`
+    .container {
+      padding: 20px;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    .table th {
+      background-color: #f5f5f5;
+      font-weight: 500;
+    }
+
+    .entity-name {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .entity-description {
+      font-size: 0.875rem;
+      color: #666;
+    }
+
+    .fields-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 0;
+    }
+
+    .field-name {
+      font-weight: 500;
+      min-width: 120px;
+    }
+
+    .field-description {
+      font-size: 0.875rem;
+      color: #666;
+      margin-left: 8px;
+    }
+  `],
+  styleUrls: ['../shared/styles/badges.scss']
 })
 export class EntityFieldsComponent implements OnInit {
   entities: Entity[] = [];
-  entityFields: EntityField[] = [];
-  showAddForm = false;
-  editingField: EntityField | null = null;
-  fieldForm: Omit<EntityField, 'id'> = {
-    entityId: 0,
-    entityName: '',
-    fieldName: '',
-    description: '',
-    dataType: 'string',
-    isRequired: false
-  };
 
   constructor(private entityService: EntityService) {}
 
   ngOnInit(): void {
     this.loadEntities();
-    this.loadEntityFields();
   }
 
   loadEntities(): void {
-    this.entityService.getEntities().subscribe(entities => {
-      this.entities = entities;
+    this.entityService.getEntities().subscribe({
+      next: (entities: Entity[]) => {
+        this.entities = entities;
+      },
+      error: (error: Error) => {
+        console.error('Error loading entities:', error);
+      }
     });
-  }
-
-  loadEntityFields(): void {
-    this.entityService.getEntityFields().subscribe(fields => {
-      this.entityFields = fields;
-    });
-  }
-
-  getEntityName(entityId: number): string {
-    const entity = this.entities.find(e => e.id === entityId);
-    return entity ? entity.name : 'Unknown Entity';
-  }
-
-  editField(field: EntityField): void {
-    this.editingField = field;
-    this.fieldForm = {
-      entityId: field.entityId,
-      entityName: field.entityName,
-      fieldName: field.fieldName,
-      description: field.description,
-      dataType: field.dataType,
-      isRequired: field.isRequired
-    };
-    this.showAddForm = true;
-  }
-
-  deleteField(field: EntityField): void {
-    if (confirm('Are you sure you want to delete this field?')) {
-      this.entityService.deleteEntityField(field.id).subscribe(() => {
-        this.loadEntityFields();
-      });
-    }
-  }
-
-  onSubmit(): void {
-    if (this.editingField) {
-      const updatedField: EntityField = {
-        ...this.fieldForm,
-        id: this.editingField.id
-      };
-      this.entityService.updateEntityField(updatedField).subscribe(() => {
-        this.showAddForm = false;
-        this.editingField = null;
-        this.fieldForm = {
-          entityId: 0,
-          entityName: '',
-          fieldName: '',
-          description: '',
-          dataType: 'string',
-          isRequired: false
-        };
-        this.loadEntityFields();
-      });
-    } else {
-      const selectedEntity = this.entities.find(e => e.id === this.fieldForm.entityId);
-      const fieldToAdd: Omit<EntityField, 'id'> = {
-        ...this.fieldForm,
-        entityName: selectedEntity?.name || 'Unknown Entity'
-      };
-      this.entityService.addEntityField(fieldToAdd).subscribe(() => {
-        this.showAddForm = false;
-        this.fieldForm = {
-          entityId: 0,
-          entityName: '',
-          fieldName: '',
-          description: '',
-          dataType: 'string',
-          isRequired: false
-        };
-        this.loadEntityFields();
-      });
-    }
-  }
-
-  cancelEdit(): void {
-    this.showAddForm = false;
-    this.editingField = null;
-    this.fieldForm = {
-      entityId: 0,
-      entityName: '',
-      fieldName: '',
-      description: '',
-      dataType: 'string',
-      isRequired: false
-    };
   }
 } 

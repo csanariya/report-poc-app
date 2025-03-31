@@ -281,53 +281,6 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-// Badge styles
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 500;
-  line-height: 1;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  border-radius: 0.25rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
-
-  // Data type badges
-  &[data-type="string"] {
-    color: #1e8e3e;
-    background-color: #e6f4ea;
-  }
-
-  &[data-type="number"] {
-    color: #1a73e8;
-    background-color: #e8f0fe;
-  }
-
-  &[data-type="boolean"] {
-    color: #f9ab00;
-    background-color: #fef7e0;
-  }
-
-  &[data-type="date"] {
-    color: #ea4335;
-    background-color: #fce8e6;
-  }
-
-  // Optional/Required badges
-  &[data-optional="true"] {
-    color: #1e8e3e;
-    background-color: #e6f4ea;
-  }
-
-  &[data-optional="false"] {
-    color: #ea4335;
-    background-color: #fce8e6;
-  }
-}
-
 // Utility classes
 .gap-2 {
   gap: 0.5rem;

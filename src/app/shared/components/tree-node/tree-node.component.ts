@@ -24,8 +24,11 @@ import { Entity, EntityField, TreeNode, SelectedColumn } from '../../models/enti
       <div class="fields-section" *ngIf="isFieldsExpanded">
         <div class="field-item" *ngFor="let field of node.entity.fields">
           <span class="field-name">{{ field.fieldName }}</span>
+          <span class="badge" [attr.data-type]="field.dataType">{{ field.dataType }}</span>
+          <span class="badge" [attr.data-optional]="field.isRequired">{{ field.isRequired ? 'Required' : 'Optional' }}</span>
           <button 
-            class="add-column-btn"
+            *ngIf="showColumnButtons"
+            class="add-column-btn" 
             [class.remove-column-btn]="isColumnSelected(field)"
             (click)="toggleColumn(field)">
             {{ isColumnSelected(field) ? 'x' : '+' }}
@@ -39,6 +42,7 @@ import { Entity, EntityField, TreeNode, SelectedColumn } from '../../models/enti
             [node]="child"
             [level]="level + 1"
             [selectedColumns]="selectedColumns"
+            [showColumnButtons]="showColumnButtons"
             (addColumn)="addColumn.emit($event)"
             (removeColumn)="removeColumn.emit($event)">
           </app-tree-node>
@@ -46,12 +50,13 @@ import { Entity, EntityField, TreeNode, SelectedColumn } from '../../models/enti
       </div>
     </div>
   `,
-  styleUrls: ['../../styles/tree-view.scss']
+  styleUrls: ['../../styles/tree-view.scss', '../../styles/badges.scss']
 })
 export class TreeNodeComponent {
   @Input() node!: TreeNode;
   @Input() level!: number;
   @Input() selectedColumns: SelectedColumn[] = [];
+  @Input() showColumnButtons: boolean = true;
   @Output() addColumn = new EventEmitter<EntityField>();
   @Output() removeColumn = new EventEmitter<number>();
 
@@ -84,10 +89,8 @@ export class TreeNodeComponent {
 
   toggleColumn(field: EntityField): void {
     if (this.isColumnSelected(field)) {
-      // If the field is already selected, remove it
       this.removeColumn.emit(field.id);
     } else {
-      // If the field is not selected, add it
       this.addColumn.emit(field);
     }
   }

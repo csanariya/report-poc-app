@@ -9,7 +9,26 @@ import { Entity, EntityField } from '../shared/models/entity.interface';
   selector: 'app-entities',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
-  templateUrl: './entities.component.html'
+  templateUrl: './entities.component.html',
+  styleUrls: ['../shared/styles/badges.scss'],
+  styles: [`
+    .field-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 0;
+    }
+
+    .field-name {
+      font-weight: 500;
+      min-width: 120px;
+    }
+
+    .actions-column {
+      width: 150px;
+      text-align: center;
+    }
+  `]
 })
 export class EntitiesComponent implements OnInit {
   entities: Entity[] = [];
