@@ -1,4 +1,4 @@
-import { EntityField } from '../../models/entity.interface';
+import { EntityField } from '../../shared/models/entity.interface';
 
 export const ENTITY_FIELDS_DATA: EntityField[] = [
   {
@@ -8,7 +8,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Name',
     description: 'Customer full name',
     dataType: 'string',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Email',
     description: 'Customer email address',
     dataType: 'string',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Order Date',
     description: 'Date when the order was placed',
     dataType: 'date',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 4,
@@ -35,7 +35,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Total Amount',
     description: 'Total amount of the order',
     dataType: 'number',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 5,
@@ -44,7 +44,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Name',
     description: 'Product name',
     dataType: 'string',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 6,
@@ -53,7 +53,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Price',
     description: 'Product price',
     dataType: 'number',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 7,
@@ -62,7 +62,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'In Stock',
     description: 'Whether the product is in stock',
     dataType: 'boolean',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 8,
@@ -71,7 +71,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'ID',
     description: 'Property ID',
     dataType: 'number',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 9,
@@ -80,7 +80,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Name',
     description: 'Property name',
     dataType: 'string',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 10,
@@ -89,16 +89,16 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Type',
     description: 'Property type',
     dataType: 'string',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 11,
     entityId: 4,
     entityName: 'Property',
     fieldName: 'Year Built',
-    description: '',
+    description: 'Year the property was built',
     dataType: 'number',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 12,
@@ -107,7 +107,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Manager ID',
     description: '',
     dataType: 'number',
-    isOptional: true
+    isRequired: true
   },
   {
     id: 13,
@@ -116,7 +116,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'ID',
     description: 'Unit ID',
     dataType: 'number',
-    isOptional: true
+    isRequired: true
   },
   {
     id: 14,
@@ -125,7 +125,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Unit Number',
     description: '',
     dataType: 'string',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 15,
@@ -134,7 +134,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Bed',
     description: '',
     dataType: 'number',
-    isOptional: true
+    isRequired: true
   },
   {
     id: 16,
@@ -143,7 +143,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Bath',
     description: '',
     dataType: 'number',
-    isOptional: true
+    isRequired: true
   },
   {
     id: 17,
@@ -152,7 +152,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Sq Ft',
     description: '',
     dataType: 'number',
-    isOptional: true
+    isRequired: true
   },
   {
     id: 18,
@@ -161,7 +161,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Name',
     description: 'Name of Manager',
     dataType: 'string',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 19,
@@ -170,7 +170,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Role',
     description: '',
     dataType: 'string',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 20,
@@ -179,7 +179,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Email',
     description: '',
     dataType: 'string',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 21,
@@ -188,7 +188,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Phone',
     description: '',
     dataType: 'string',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 22,
@@ -197,7 +197,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Name',
     description: 'Name of Owner',
     dataType: 'string',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 23,
@@ -206,7 +206,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Email',
     description: '',
     dataType: 'string',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 24,
@@ -215,7 +215,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Phone',
     description: '',
     dataType: 'string',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 25,
@@ -224,7 +224,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Date Listed',
     description: '',
     dataType: 'date',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 26,
@@ -233,7 +233,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Date Unlisted',
     description: '',
     dataType: 'date',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 27,
@@ -242,7 +242,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Rent',
     description: 'The listed rent of the rental unit',
     dataType: 'number',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 28,
@@ -251,7 +251,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'ID',
     description: 'Lease ID',
     dataType: 'number',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 29,
@@ -260,7 +260,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Start Date',
     description: 'The start date of the lease',
     dataType: 'date',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 30,
@@ -269,7 +269,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'End Date',
     description: 'The end date of the lease',
     dataType: 'date',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 31,
@@ -278,7 +278,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Unit ID',
     description: '',
     dataType: 'number',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 32,
@@ -287,7 +287,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Rent',
     description: '',
     dataType: 'number',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 33,
@@ -296,7 +296,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'ID',
     description: 'Tenant ID',
     dataType: 'number',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 34,
@@ -305,7 +305,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Name',
     description: '',
     dataType: 'string',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 35,
@@ -314,7 +314,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Email',
     description: '',
     dataType: 'string',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 36,
@@ -323,7 +323,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Phone',
     description: '',
     dataType: 'string',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 37,
@@ -332,7 +332,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'License',
     description: 'Driver\'s license number of the tenant',
     dataType: 'string',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 38,
@@ -341,7 +341,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Is Primary',
     description: '',
     dataType: 'boolean',
-    isOptional: false
+    isRequired: true
   },
   {
     id: 39,
@@ -350,7 +350,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Make',
     description: 'The make of the vehicle',
     dataType: 'string',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 40,
@@ -359,7 +359,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Model',
     description: 'The model of the vehicle',
     dataType: 'string',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 41,
@@ -368,7 +368,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Year',
     description: '',
     dataType: 'number',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 42,
@@ -377,7 +377,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Color',
     description: '',
     dataType: 'string',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 43,
@@ -386,7 +386,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Street Address',
     description: '',
     dataType: 'string',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 44,
@@ -395,7 +395,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'City',
     description: '',
     dataType: 'string',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 45,
@@ -404,7 +404,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'State',
     description: '',
     dataType: 'string',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 46,
@@ -413,7 +413,7 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Zip',
     description: '',
     dataType: 'string',
-    isOptional: true
+    isRequired: false
   },
   {
     id: 47,
@@ -422,6 +422,6 @@ export const ENTITY_FIELDS_DATA: EntityField[] = [
     fieldName: 'Country',
     description: '',
     dataType: 'string',
-    isOptional: true
+    isRequired: false
   }
 ]; 

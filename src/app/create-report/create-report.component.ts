@@ -5,14 +5,15 @@ import { Entity, EntityField, TreeNode } from '../shared/models/entity.interface
 import { TreeNodeComponent } from '../shared/components/tree-node/tree-node.component';
 
 @Component({
-  selector: 'app-entity-tree',
+  selector: 'app-create-report',
   standalone: true,
   imports: [CommonModule, TreeNodeComponent],
-  templateUrl: './entity-tree.component.html',
+  templateUrl: './create-report.component.html',
   styleUrls: ['../shared/styles/tree-view.scss']
 })
-export class EntityTreeComponent implements OnInit {
+export class CreateReportComponent implements OnInit {
   treeNodes: TreeNode[] = [];
+  selectedColumns: SelectedColumn[] = [];
 
   constructor(private entityService: EntityService) {}
 
@@ -65,7 +66,35 @@ export class EntityTreeComponent implements OnInit {
   }
 
   addColumn(field: EntityField): void {
-    // This is just a placeholder since we don't need to handle column selection in the tree view
-    console.log('Field selected:', field);
+    if (!this.selectedColumns.some(col => col.field.id === field.id)) {
+      this.selectedColumns.push({
+        entityName: field.entityName,
+        field
+      });
+    }
   }
+
+  removeColumn(fieldId: number): void {
+    this.selectedColumns = this.selectedColumns.filter(col => col.field.id !== fieldId);
+  }
+
+  getSampleValue(field: EntityField): string {
+    switch (field.dataType.toLowerCase()) {
+      case 'string':
+        return 'Sample Text';
+      case 'number':
+        return '123';
+      case 'date':
+        return new Date().toLocaleDateString();
+      case 'boolean':
+        return 'Yes';
+      default:
+        return 'Sample Value';
+    }
+  }
+}
+
+interface SelectedColumn {
+  entityName: string;
+  field: EntityField;
 } 

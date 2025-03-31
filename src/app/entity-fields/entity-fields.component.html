@@ -47,8 +47,8 @@
         <div class="form-row">
           <div class="form-group">
             <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="isOptional" [(ngModel)]="fieldForm.isOptional" name="isOptional">
-              <label class="form-check-label" for="isOptional">Optional Field</label>
+              <input type="checkbox" class="form-check-input" id="isRequired" [(ngModel)]="fieldForm.isRequired" name="isRequired">
+              <label class="form-check-label" for="isRequired">Required Field</label>
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@
               <td>{{ field.fieldName }}</td>
               <td>{{ field.description }}</td>
               <td class="text-center"><span class="badge" [attr.data-type]="field.dataType">{{ field.dataType }}</span></td>
-              <td class="text-center"><span class="badge" [attr.data-optional]="field.isOptional">{{ field.isOptional ? 'Optional' : 'Required' }}</span></td>
+              <td class="text-center"><span class="badge" [attr.data-optional]="field.isRequired">{{ field.isRequired ? 'Required' : 'Optional' }}</span></td>
               <td class="actions-column">
                 <div class="d-flex gap-2 justify-content-center">
                   <button class="btn btn-sm btn-outline-primary" (click)="editField(field)">Edit</button>

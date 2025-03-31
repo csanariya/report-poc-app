@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { EntityService } from '../services/entity.service';
-import { Entity, EntityField } from '../models/entity.interface';
+import { Entity, EntityField } from '../shared/models/entity.interface';
 
 @Component({
   selector: 'app-entity-fields',
@@ -21,7 +21,7 @@ export class EntityFieldsComponent implements OnInit {
     fieldName: '',
     description: '',
     dataType: 'string',
-    isOptional: false
+    isRequired: false
   };
 
   constructor(private entityService: EntityService) {}
@@ -56,7 +56,7 @@ export class EntityFieldsComponent implements OnInit {
       fieldName: field.fieldName,
       description: field.description,
       dataType: field.dataType,
-      isOptional: field.isOptional
+      isRequired: field.isRequired
     };
     this.showAddForm = true;
   }
@@ -84,7 +84,7 @@ export class EntityFieldsComponent implements OnInit {
           fieldName: '',
           description: '',
           dataType: 'string',
-          isOptional: false
+          isRequired: false
         };
         this.loadEntityFields();
       });
@@ -102,7 +102,7 @@ export class EntityFieldsComponent implements OnInit {
           fieldName: '',
           description: '',
           dataType: 'string',
-          isOptional: false
+          isRequired: false
         };
         this.loadEntityFields();
       });
@@ -118,7 +118,7 @@ export class EntityFieldsComponent implements OnInit {
       fieldName: '',
       description: '',
       dataType: 'string',
-      isOptional: false
+      isRequired: false
     };
   }
 } 

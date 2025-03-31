@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Entity, EntityField } from '../models/entity.interface';
+import { Entity, EntityField } from '../shared/models/entity.interface';
 import { ENTITIES_DATA } from './data/entities.data';
 import { ENTITY_FIELDS_DATA } from './data/entity-fields.data';
 
@@ -11,27 +12,39 @@ export class EntityService {
   private entities: Entity[] = [...ENTITIES_DATA];
   private entityFields: EntityField[] = [...ENTITY_FIELDS_DATA];
 
-  constructor() {}
+  constructor(private http: HttpClient) { }
 
   getEntities(): Observable<Entity[]> {
-    return of(this.entities);
+    // Map the entities and add their fields
+    const entitiesWithFields = this.entities.map(entity => ({
+      ...entity,
+      fields: this.entityFields.filter(field => field.entityId === entity.id)
+    }));
+    return of(entitiesWithFields);
   }
 
-  getEntity(id: number): Observable<Entity | undefined> {
-    return of(this.entities.find(e => e.id === id));
+  getEntity(id: number): Observable<Entity> {
+    const entity = this.entities.find(e => e.id === id);
+    if (entity) {
+      return of({
+        ...entity,
+        fields: this.entityFields.filter(field => field.entityId === entity.id)
+      });
+    }
+    throw new Error('Entity not found');
   }
 
-  addEntity(entity: Omit<Entity, 'id'>): Observable<Entity> {
+  createEntity(entity: Entity): Observable<Entity> {
     const newEntity = {
       ...entity,
-      id: Math.max(...this.entities.map(e => e.id), 0) + 1
+      id: this.entities.length + 1
     };
     this.entities.push(newEntity);
     return of(newEntity);
   }
 
-  updateEntity(entity: Entity): Observable<Entity> {
-    const index = this.entities.findIndex(e => e.id === entity.id);
+  updateEntity(id: number, entity: Entity): Observable<Entity> {
+    const index = this.entities.findIndex(e => e.id === id);
     if (index !== -1) {
       this.entities[index] = entity;
     }
@@ -56,11 +69,9 @@ export class EntityService {
   }
 
   addEntityField(field: Omit<EntityField, 'id'>): Observable<EntityField> {
-    const entity = this.entities.find(e => e.id === field.entityId);
     const newField = {
       ...field,
-      id: Math.max(...this.entityFields.map(f => f.id), 0) + 1,
-      entityName: entity?.name || 'Unknown Entity'
+      id: this.entityFields.length + 1
     };
     this.entityFields.push(newField);
     return of(newField);

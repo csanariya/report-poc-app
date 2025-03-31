@@ -1,0 +1,64 @@
+<div class="container mt-4">
+  <h2>Create Report</h2>
+  
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3>Configuration</h3>
+        </div>
+        <div class="card-body">
+          <div class="tree-view">
+            <ng-container *ngFor="let node of treeNodes">
+              <app-tree-node
+                [node]="node"
+                [level]="1"
+                [expanded]="node.expanded"
+                [fieldsExpanded]="node.fieldsExpanded"
+                (toggleNode)="toggleNode(node)"
+                (toggleFields)="toggleFields(node)"
+                (addColumn)="addColumn($event)">
+              </app-tree-node>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3>Preview</h3>
+        </div>
+        <div class="card-body">
+          <div *ngIf="selectedColumns.length > 0">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th *ngFor="let column of selectedColumns">
+                    {{ column.entityName }}: {{ column.field.fieldName }}
+                    <button class="btn btn-sm btn-danger ms-2" (click)="removeColumn(column.field.id)">
+                      Remove
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td *ngFor="let column of selectedColumns">
+                    <span [class.text-muted]="!column.field.isRequired">
+                      {{ getSampleValue(column.field) }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="selectedColumns.length === 0" class="text-center text-muted">
+            Select fields from the configuration to preview the report
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { EntityService } from '../services/entity.service';
-import { Entity, EntityField } from '../models/entity.interface';
+import { Entity, EntityField } from '../shared/models/entity.interface';
 
 @Component({
   selector: 'app-entities',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './entities.component.html'
 })
 export class EntitiesComponent implements OnInit {
