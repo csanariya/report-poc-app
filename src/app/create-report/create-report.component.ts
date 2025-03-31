@@ -81,7 +81,7 @@ export class CreateReportComponent implements OnInit {
   getSampleValue(field: EntityField): string {
     switch (field.dataType.toLowerCase()) {
       case 'string':
-        return 'Sample Text';
+        return 'Text';
       case 'number':
         return '123';
       case 'date':
@@ -89,7 +89,7 @@ export class CreateReportComponent implements OnInit {
       case 'boolean':
         return 'Yes';
       default:
-        return 'Sample Value';
+        return 'Value';
     }
   }
 }

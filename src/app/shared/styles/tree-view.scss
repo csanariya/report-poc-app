@@ -4,6 +4,8 @@
 
 .tree-node {
   margin: 0.5rem 0;
+  padding-left: 1rem;
+  border-left: 1px solid #e9ecef;
 }
 
 .entity-item {
@@ -13,6 +15,7 @@
   border-radius: 4px;
   background-color: #f8f9fa;
   margin-bottom: 0.5rem;
+  position: relative;
 
   &:hover {
     background-color: #e9ecef;
@@ -55,8 +58,10 @@
 }
 
 .fields-section {
-  margin-left: 2rem;
+  margin-left: 1rem;
   margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  border-left: 1px dashed #e9ecef;
 }
 
 .field-item {

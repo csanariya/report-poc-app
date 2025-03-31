@@ -10,22 +10,22 @@ import { Entity, EntityField, TreeNode } from '../../models/entity.interface';
     <div class="tree-node">
       <div class="entity-item">
         <span class="toggle-icon" (click)="toggleNode.emit()">
-          {{ expanded ? '▼' : '▶' }}
+          {{ hasChildren ? (expanded ? '▼' : '▶') : '⬤' }}
         </span>
         <span class="level-label" [style.color]="getLevelColor(level)">
           {{ getLevelLabel(level) }}
         </span>
         <span class="entity-name">{{ node.entity.name }}</span>
-        <button class="toggle-fields-btn" (click)="toggleFields.emit()">
-          {{ fieldsExpanded ? 'Hide Fields' : 'Show Fields' }}
+        <button class="toggle-fields-btn" (click)="toggleLocalFields()">
+          {{ isFieldsExpanded ? 'Hide Fields' : 'Show Fields' }}
         </button>
       </div>
 
-      <div class="fields-section" *ngIf="fieldsExpanded">
+      <div class="fields-section" *ngIf="isFieldsExpanded">
         <div class="field-item" *ngFor="let field of node.entity.fields">
           <span class="field-name">{{ field.fieldName }}</span>
           <button class="add-column-btn" (click)="addColumn.emit(field)">
-            Add Column
+            +
           </button>
         </div>
       </div>
@@ -37,8 +37,7 @@ import { Entity, EntityField, TreeNode } from '../../models/entity.interface';
             [level]="level + 1"
             [expanded]="child.expanded"
             [fieldsExpanded]="child.fieldsExpanded"
-            (toggleNode)="toggleNode.emit()"
-            (toggleFields)="toggleFields.emit()"
+            (toggleNode)="onChildToggleNode($event)"
             (addColumn)="addColumn.emit($event)">
           </app-tree-node>
         </ng-container>
@@ -53,8 +52,21 @@ export class TreeNodeComponent {
   @Input() expanded: boolean = true;
   @Input() fieldsExpanded: boolean = false;
   @Output() toggleNode = new EventEmitter<void>();
-  @Output() toggleFields = new EventEmitter<void>();
   @Output() addColumn = new EventEmitter<EntityField>();
+
+  private _isFieldsExpanded: boolean = false;
+
+  get hasChildren(): boolean {
+    return this.node.children && this.node.children.length > 0;
+  }
+
+  toggleLocalFields(): void {
+    this._isFieldsExpanded = !this._isFieldsExpanded;
+  }
+
+  get isFieldsExpanded(): boolean {
+    return this._isFieldsExpanded;
+  }
 
   getLevelLabel(level: number): string {
     return `L${level}`;
@@ -71,5 +83,9 @@ export class TreeNodeComponent {
       '#455A64'  // Level 7 - Dark Grey
     ];
     return colors[level - 1] || '#000000';
+  }
+
+  onChildToggleNode(event: void): void {
+    this.toggleNode.emit();
   }
 } 
