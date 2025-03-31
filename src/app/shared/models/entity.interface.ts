@@ -19,8 +19,6 @@ export interface EntityField {
 export interface TreeNode {
   entity: Entity;
   children: TreeNode[];
-  expanded: boolean;
-  fieldsExpanded: boolean;
   level?: number;
 }
 

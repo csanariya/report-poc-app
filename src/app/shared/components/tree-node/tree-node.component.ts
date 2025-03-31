@@ -9,8 +9,8 @@ import { Entity, EntityField, TreeNode } from '../../models/entity.interface';
   template: `
     <div class="tree-node">
       <div class="entity-item">
-        <span class="toggle-icon" (click)="toggleNode.emit()">
-          {{ hasChildren ? (expanded ? '▼' : '▶') : '⬤' }}
+        <span class="toggle-icon" (click)="toggleLocalNode()">
+          {{ hasChildren ? (isExpanded ? '▼' : '▶') : '⬤' }}
         </span>
         <span class="level-label" [style.color]="getLevelColor(level)">
           {{ getLevelLabel(level) }}
@@ -30,14 +30,11 @@ import { Entity, EntityField, TreeNode } from '../../models/entity.interface';
         </div>
       </div>
 
-      <div *ngIf="expanded && node.children">
+      <div *ngIf="isExpanded && node.children">
         <ng-container *ngFor="let child of node.children">
           <app-tree-node
             [node]="child"
             [level]="level + 1"
-            [expanded]="child.expanded"
-            [fieldsExpanded]="child.fieldsExpanded"
-            (toggleNode)="onChildToggleNode($event)"
             (addColumn)="addColumn.emit($event)">
           </app-tree-node>
         </ng-container>
@@ -49,15 +46,21 @@ import { Entity, EntityField, TreeNode } from '../../models/entity.interface';
 export class TreeNodeComponent {
   @Input() node!: TreeNode;
   @Input() level!: number;
-  @Input() expanded: boolean = true;
-  @Input() fieldsExpanded: boolean = false;
-  @Output() toggleNode = new EventEmitter<void>();
   @Output() addColumn = new EventEmitter<EntityField>();
 
+  private _isExpanded: boolean = true;
   private _isFieldsExpanded: boolean = false;
 
   get hasChildren(): boolean {
     return this.node.children && this.node.children.length > 0;
+  }
+
+  toggleLocalNode(): void {
+    this._isExpanded = !this._isExpanded;
+  }
+
+  get isExpanded(): boolean {
+    return this._isExpanded;
   }
 
   toggleLocalFields(): void {
@@ -83,9 +86,5 @@ export class TreeNodeComponent {
       '#455A64'  // Level 7 - Dark Grey
     ];
     return colors[level - 1] || '#000000';
-  }
-
-  onChildToggleNode(event: void): void {
-    this.toggleNode.emit();
   }
 } 

@@ -34,8 +34,6 @@ export class EntityTreeComponent implements OnInit {
     entities.forEach(entity => {
       entityMap.set(entity.id, {
         entity,
-        expanded: true,
-        fieldsExpanded: false,
         children: []
       });
     });
@@ -54,14 +52,6 @@ export class EntityTreeComponent implements OnInit {
     });
 
     return roots;
-  }
-
-  toggleNode(node: TreeNode): void {
-    node.expanded = !node.expanded;
-  }
-
-  toggleFields(node: TreeNode): void {
-    node.fieldsExpanded = !node.fieldsExpanded;
   }
 
   addColumn(field: EntityField): void {
