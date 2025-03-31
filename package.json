@@ -6,9 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "deploy": "ng build --configuration=production && npx angular-cli-ghpages --dir=dist/ReportPOCApp --repo=https://github.com/csanariya/report-poc-app.git --name=\"Chandni\" --email=\"chandni.sanariya@gmail.com\""
+    "deploy": "ng build --configuration=production --base-href=/report-poc-app/ && npx angular-cli-ghpages --dir=dist/ReportPOCApp --repo=https://github.com/csanariya/report-poc-app.git --name=\"Chandni\" --email=\"chandni.sanariya@gmail.com\""
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "^19.0.0",
     "@angular/common": "^19.0.0",
