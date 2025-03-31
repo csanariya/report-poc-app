@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EntityService } from '../services/entity.service';
-import { Entity, EntityField, TreeNode } from '../shared/models/entity.interface';
+import { Entity, EntityField, TreeNode, SelectedColumn } from '../shared/models/entity.interface';
 import { TreeNodeComponent } from '../shared/components/tree-node/tree-node.component';
 
 @Component({
@@ -82,9 +82,4 @@ export class CreateReportComponent implements OnInit {
         return 'Value';
     }
   }
-}
-
-interface SelectedColumn {
-  entityName: string;
-  field: EntityField;
 } 

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Entity, EntityField, TreeNode } from '../../models/entity.interface';
+import { Entity, EntityField, TreeNode, SelectedColumn } from '../../models/entity.interface';
 
 @Component({
   selector: 'app-tree-node',
@@ -24,8 +24,11 @@ import { Entity, EntityField, TreeNode } from '../../models/entity.interface';
       <div class="fields-section" *ngIf="isFieldsExpanded">
         <div class="field-item" *ngFor="let field of node.entity.fields">
           <span class="field-name">{{ field.fieldName }}</span>
-          <button class="add-column-btn" (click)="addColumn.emit(field)">
-            +
+          <button 
+            class="add-column-btn"
+            [class.remove-column-btn]="isColumnSelected(field)"
+            (click)="toggleColumn(field)">
+            {{ isColumnSelected(field) ? 'x' : '+' }}
           </button>
         </div>
       </div>
@@ -35,7 +38,9 @@ import { Entity, EntityField, TreeNode } from '../../models/entity.interface';
           <app-tree-node
             [node]="child"
             [level]="level + 1"
-            (addColumn)="addColumn.emit($event)">
+            [selectedColumns]="selectedColumns"
+            (addColumn)="addColumn.emit($event)"
+            (removeColumn)="removeColumn.emit($event)">
           </app-tree-node>
         </ng-container>
       </div>
@@ -46,7 +51,9 @@ import { Entity, EntityField, TreeNode } from '../../models/entity.interface';
 export class TreeNodeComponent {
   @Input() node!: TreeNode;
   @Input() level!: number;
+  @Input() selectedColumns: SelectedColumn[] = [];
   @Output() addColumn = new EventEmitter<EntityField>();
+  @Output() removeColumn = new EventEmitter<number>();
 
   private _isExpanded: boolean = true;
   private _isFieldsExpanded: boolean = false;
@@ -69,6 +76,20 @@ export class TreeNodeComponent {
 
   get isFieldsExpanded(): boolean {
     return this._isFieldsExpanded;
+  }
+
+  isColumnSelected(field: EntityField): boolean {
+    return this.selectedColumns.some(col => col.field.id === field.id);
+  }
+
+  toggleColumn(field: EntityField): void {
+    if (this.isColumnSelected(field)) {
+      // If the field is already selected, remove it
+      this.removeColumn.emit(field.id);
+    } else {
+      // If the field is not selected, add it
+      this.addColumn.emit(field);
+    }
   }
 
   getLevelLabel(level: number): string {

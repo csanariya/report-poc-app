@@ -13,7 +13,9 @@
               <app-tree-node
                 [node]="node"
                 [level]="1"
-                (addColumn)="addColumn($event)">
+                [selectedColumns]="selectedColumns"
+                (addColumn)="addColumn($event)"
+                (removeColumn)="removeColumn($event)">
               </app-tree-node>
             </ng-container>
           </div>
@@ -28,14 +30,12 @@
         </div>
         <div class="card-body">
           <div *ngIf="selectedColumns.length > 0">
-            <table class="table">
+            <table class="table"> 
               <thead>
                 <tr>
                   <th *ngFor="let column of selectedColumns">
-                    {{ column.entityName }}: {{ column.field.fieldName }}
-                    <button class="btn btn-sm btn-danger ms-2" (click)="removeColumn(column.field.id)">
-                      Remove
-                    </button>
+                    {{ column.field.entityName }}: <br/>
+                    {{ column.field.fieldName }}
                   </th>
                 </tr>
               </thead>
