@@ -13,10 +13,10 @@ import { Entity, EntityField } from '../shared/models/entity.interface';
   styleUrls: ['../shared/styles/badges.scss'],
   styles: [`
     .field-item {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 4px 0;
+      margin-right: 8px;
+      margin-bottom: 4px;
     }
 
     .field-name {
@@ -27,6 +27,13 @@ import { Entity, EntityField } from '../shared/models/entity.interface';
     .actions-column {
       width: 150px;
       text-align: center;
+    }
+
+    .badge-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      align-items: center;
     }
   `]
 })

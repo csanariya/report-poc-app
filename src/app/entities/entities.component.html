@@ -2,12 +2,12 @@
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Entities</h2>
     <div class="d-flex gap-2">
-      <a routerLink="/create-report" class="btn btn-success">
+      <button routerLink="/create-report" class="btn btn-primary">
         <i class="bi bi-file-earmark-text"></i> Create Report
-      </a>
-      <button class="btn btn-primary" (click)="showAddForm = true">
-        Add Entity
       </button>
+      <!-- <button class="btn btn-primary" (click)="showAddForm = true">
+        Add Entity
+      </button> -->
     </div>
   </div>
 
@@ -50,11 +50,9 @@
         <!-- Fields Preview Section -->
         <div class="mt-4" *ngIf="editingEntity">
           <h6 class="mb-3">Entity Fields</h6>
-          <div class="d-flex flex-wrap gap-2">
+          <div class="badge-container">
             <span *ngFor="let field of getEntityFields(editingEntity.id)" class="field-item">
-              <span class="badge" [attr.data-type]="field.dataType">{{ field.fieldName }}
-                <!--<span class="badge" [attr.data-optional]="field.isRequired">{{ field.isRequired ? 'N' : 'Y' }}</span>-->
-              </span>
+              <span class="badge" [attr.data-type]="field.dataType">{{ field.fieldName }}</span>
             </span>
           </div>
         </div>
@@ -72,7 +70,7 @@
               <th>Parent Entity</th>
               <th>Description</th>
               <th>Fields</th>
-              <th class="actions-column">Actions</th>
+              <!-- <th class="actions-column">Actions</th> -->
             </tr>
           </thead>
           <tbody>
@@ -81,15 +79,13 @@
               <td>{{ getParentName(entity.parentId) }}</td>
               <td>{{ entity.description }}</td>
               <td>
-                <div class="d-flex flex-wrap gap-2">
+                <div class="badge-container">
                   <span *ngFor="let field of getEntityFields(entity.id)" class="field-item">
-                    <span class="badge" [attr.data-type]="field.dataType">{{ field.fieldName }}
-                      <!--<span class="badge" [attr.data-optional]="field.isRequired">{{ field.isRequired ? 'N' : 'Y' }}</span>-->
-                    </span>
+                    <span class="badge" [attr.data-type]="field.dataType">{{ field.fieldName }}</span>
                   </span>
                 </div>
               </td>
-              <td class="actions-column">
+              <!-- <td class="actions-column">
                 <div class="d-flex gap-2 justify-content-center">
                   <button class="btn btn-sm btn-outline-primary" (click)="editEntity(entity)">
                     Edit
@@ -98,7 +94,7 @@
                     Delete
                   </button>
                 </div>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>
