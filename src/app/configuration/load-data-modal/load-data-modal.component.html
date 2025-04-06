@@ -1,0 +1,27 @@
+<div class="modal-backdrop" (click)="close()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Load Configuration</h3>
+      <button class="close-btn" (click)="close()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="upload-section">
+        <h4>Upload TypeScript File</h4>
+        <input type="file" 
+               accept=".ts" 
+               (change)="onFileSelected($event)"
+               class="file-input">
+      </div>
+      <div class="paste-section">
+        <h4>Or Paste TypeScript Content</h4>
+        <textarea [(ngModel)]="pastedContent" 
+                  placeholder="Paste your TypeScript content here..."
+                  class="paste-area"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="handleLoadData()">Load Data</button>
+      <button class="btn btn-secondary" (click)="close()">Cancel</button>
+    </div>
+  </div>
+</div> 

@@ -2,10 +2,17 @@
   <div class="header">
     <h1>Configuration</h1>
     <div class="header-actions">
+      <button class="btn btn-outline-primary" (click)="openLoadModal()">Load Configuration</button>
       <button class="btn btn-outline-primary" (click)="downloadData()">Download</button>
       <button class="btn btn-outline-danger" (click)="resetToDefault()">Reset to Default</button>
     </div>
   </div>
+
+  <app-load-data-modal 
+    *ngIf="showLoadModal"
+    (closeModal)="closeLoadModal()"
+    (loadData)="onLoadData($event)">
+  </app-load-data-modal>
 
   <div class="configuration-content">
     <!-- Entities Section -->

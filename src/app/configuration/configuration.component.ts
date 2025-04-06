@@ -4,11 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Entity, EntityField } from '../shared/models/entity.interface';
 import { ConfigurationService } from '../services/configuration.service';
 import { FilterByEntityIdPipe } from '../shared/pipes/filter-by-entity-id.pipe';
+import { LoadDataModalComponent } from './load-data-modal/load-data-modal.component';
 
 @Component({
   selector: 'app-configuration',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, FilterByEntityIdPipe],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, FilterByEntityIdPipe, LoadDataModalComponent],
   templateUrl: './configuration.component.html',
   styleUrls: ['./configuration.component.scss']
 })
@@ -20,6 +21,7 @@ export class ConfigurationComponent implements OnInit {
   newEntity: Partial<Entity> = {};
   newField: Partial<EntityField> = {};
   editingFields: { [key: number]: EntityField } = {};
+  showLoadModal = false;
 
   constructor(private configService: ConfigurationService) {}
 
@@ -229,5 +231,20 @@ export class ConfigurationComponent implements OnInit {
       return 'Parent ID must be empty or match an existing entity ID';
     }
     return '';
+  }
+
+  openLoadModal(): void {
+    this.showLoadModal = true;
+  }
+
+  closeLoadModal(): void {
+    this.showLoadModal = false;
+  }
+
+  onLoadData(data: { entities: Entity[], fields: EntityField[] }): void {
+    this.configService.updateEntities(data.entities);
+    this.configService.updateEntityFields(data.fields);
+    this.loadData();
+    this.closeLoadModal();
   }
 } 
