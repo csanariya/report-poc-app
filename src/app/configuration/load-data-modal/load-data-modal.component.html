@@ -14,9 +14,7 @@
       </div>
       <div class="paste-section">
         <h4>Or Paste TypeScript Content</h4>
-        <textarea [(ngModel)]="pastedContent" 
-                  placeholder="Paste your TypeScript content here..."
-                  class="paste-area"></textarea>
+        <div #editorContainer class="editor-container"></div>
       </div>
     </div>
     <div class="modal-footer">
