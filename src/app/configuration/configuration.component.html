@@ -1,0 +1,139 @@
+<div class="configuration-container">
+  <div class="header">
+    <h1>Entity Configuration</h1>
+    <button class="btn btn-sm btn-outline-secondary" (click)="resetToDefault()">Reset to Default</button>
+  </div>
+
+  <div class="configuration-content">
+    <!-- Entities Section -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Entities</h2>
+        <button class="btn btn-sm btn-primary" (click)="newEntity = {}">Add Entity</button>
+      </div>
+
+      <!-- New Entity Form -->
+      <div class="form-container" *ngIf="newEntity">
+        <form (ngSubmit)="addNewEntity()" class="compact-form">
+          <div class="form-row">
+            <input type="text" [(ngModel)]="newEntity.name" name="newEntityName" placeholder="Entity Name" required>
+            <input type="number" [(ngModel)]="newEntity.parentId" name="newEntityParentId" placeholder="Parent ID">
+            <button type="submit" class="btn btn-sm btn-success">Add</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Entities List -->
+      <div class="list-container">
+        <div *ngFor="let entity of entities" 
+             class="item"
+             [class.selected]="selectedEntity?.id === entity.id">
+          <div class="item-content">
+            <!-- Entity Display -->
+            <div class="item-display" *ngIf="editingEntity?.id !== entity.id" (click)="selectEntity(entity)">
+              <div class="item-header">
+                <span class="name">{{entity.name}}</span>
+                <div class="actions">
+                  <button class="btn btn-sm btn-outline-primary" (click)="startEditEntity(entity)">Edit</button>
+                  <button class="btn btn-sm btn-outline-danger" (click)="deleteEntity(entity)">Delete</button>
+                </div>
+              </div>
+              <div class="item-details">
+                <span class="detail">ID: {{entity.id}}</span>
+                <span class="detail">Parent: {{entity.parentId || 'None'}}</span>
+              </div>
+            </div>
+
+            <!-- Entity Edit Form -->
+            <div class="item-edit" *ngIf="editingEntity?.id === entity.id">
+              <form (ngSubmit)="saveEntity()" class="compact-form">
+                <div class="form-row">
+                  <input type="text" [ngModel]="getEditingEntityName()" (ngModelChange)="setEditingEntityName($event)" name="name" required>
+                  <input type="number" [ngModel]="getEditingEntityParentId()" (ngModelChange)="setEditingEntityParentId($event)" name="parentId">
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-sm btn-success">Save</button>
+                    <button type="button" class="btn btn-sm btn-secondary" (click)="cancelEditEntity()">Cancel</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fields Section -->
+    <div class="section" *ngIf="selectedEntity">
+      <div class="section-header">
+        <h2>Fields for {{selectedEntity.name}}</h2>
+        <button class="btn btn-sm btn-primary" (click)="newField = {}">Add Field</button>
+      </div>
+
+      <!-- New Field Form -->
+      <div class="form-container" *ngIf="newField">
+        <form (ngSubmit)="addNewField()" class="compact-form">
+          <div class="form-row">
+            <input type="text" [(ngModel)]="newField.fieldName" name="newFieldName" placeholder="Field Name" required>
+            <select [(ngModel)]="newField.dataType" name="newFieldType">
+              <option value="string">String</option>
+              <option value="number">Number</option>
+              <option value="boolean">Boolean</option>
+              <option value="date">Date</option>
+            </select>
+            <div class="checkbox-container">
+              <input type="checkbox" [(ngModel)]="newField.isRequired" name="newFieldRequired">
+              <label>Required</label>
+            </div>
+            <button type="submit" class="btn btn-sm btn-success">Add</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Fields List -->
+      <div class="list-container">
+        <div *ngFor="let field of entityFields | filterByEntityId:selectedEntity.id" 
+             class="item">
+          <div class="item-content">
+            <!-- Field Display -->
+            <div class="item-display" *ngIf="editingField?.id !== field.id">
+              <div class="item-header">
+                <span class="name">{{field.fieldName}}</span>
+                <div class="actions">
+                  <button class="btn btn-sm btn-outline-primary" (click)="startEditField(field)">Edit</button>
+                  <button class="btn btn-sm btn-outline-danger" (click)="deleteField(field)">Delete</button>
+                </div>
+              </div>
+              <div class="item-details">
+                <span class="detail">Type: {{field.dataType}}</span>
+                <span class="detail">Required: {{field.isRequired ? 'Yes' : 'No'}}</span>
+              </div>
+            </div>
+
+            <!-- Field Edit Form -->
+            <div class="item-edit" *ngIf="editingField?.id === field.id">
+              <form (ngSubmit)="saveField()" class="compact-form">
+                <div class="form-row">
+                  <input type="text" [ngModel]="getEditingFieldName()" (ngModelChange)="setEditingFieldName($event)" name="fieldName" required>
+                  <select [ngModel]="getEditingFieldDataType()" (ngModelChange)="setEditingFieldDataType($event)" name="dataType">
+                    <option value="string">String</option>
+                    <option value="number">Number</option>
+                    <option value="boolean">Boolean</option>
+                    <option value="date">Date</option>
+                  </select>
+                  <div class="checkbox-container">
+                    <input type="checkbox" [ngModel]="getEditingFieldIsRequired()" (ngModelChange)="setEditingFieldIsRequired($event)" name="isRequired">
+                    <label>Required</label>
+                  </div>
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-sm btn-success">Save</button>
+                    <button type="button" class="btn btn-sm btn-secondary" (click)="cancelEditField()">Cancel</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
