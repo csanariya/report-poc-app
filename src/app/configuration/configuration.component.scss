@@ -11,7 +11,7 @@
 
     h1 {
       margin: 0;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
     }
   }
 
@@ -30,17 +30,17 @@
     padding: 15px;
     border-radius: 6px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
 
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 
-      h2 {
-        margin: 0;
-        font-size: 1.2rem;
-      }
+    h2 {
+      margin: 0;
+      font-size: 1rem;
     }
   }
 
@@ -65,7 +65,7 @@
         padding: 4px 8px;
         border: 1px solid #dee2e6;
         border-radius: 4px;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         flex: 1;
         min-width: 0;
 
@@ -84,7 +84,7 @@
 
         label {
           margin: 0;
-          font-size: 0.9rem;
+          font-size: 0.85rem;
         }
       }
 
@@ -116,52 +116,52 @@
       border-color: #007bff;
       background-color: #f8f9ff;
     }
+  }
 
-    .item-content {
-      .item-display {
-        cursor: pointer;
-      }
-
-      .item-edit {
-        background: #f8f9fa;
-        padding: 8px;
-        border-radius: 4px;
-        margin-top: 4px;
-      }
+  .item-content {
+    .item-display {
+      cursor: pointer;
     }
 
-    .item-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 4px;
+    .item-edit {
+      background: #f8f9fa;
+      padding: 8px;
+      border-radius: 4px;
+      margin-top: 4px;
+    }
+  }
 
-      .name {
-        font-weight: 500;
-        font-size: 0.95rem;
-      }
+  .item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
 
-      .actions {
-        display: flex;
-        gap: 4px;
-      }
+    .name {
+      font-weight: 500;
+      font-size: 0.9rem;
     }
 
-    .item-details {
+    .actions {
       display: flex;
-      gap: 12px;
-      font-size: 0.85rem;
-      color: #6c757d;
+      gap: 4px;
+    }
+  }
 
-      .detail {
-        white-space: nowrap;
-      }
+  .item-details {
+    display: flex;
+    gap: 12px;
+    font-size: 0.8rem;
+    color: #6c757d;
+
+    .detail {
+      white-space: nowrap;
     }
   }
 
   .btn {
     padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     line-height: 1.5;
     border-radius: 0.2rem;
 
@@ -170,4 +170,11 @@
       font-size: 0.75rem;
     }
   }
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  padding-left: 0.5rem;
 } 

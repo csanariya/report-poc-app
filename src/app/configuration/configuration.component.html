@@ -1,7 +1,7 @@
 <div class="configuration-container">
   <div class="header">
-    <h1>Entity Configuration</h1>
-    <button class="btn btn-sm btn-outline-secondary" (click)="resetToDefault()">Reset to Default</button>
+    <h1>Configuration</h1>
+    <button class="btn btn-outline-danger" (click)="resetToDefault()">Reset to Default</button>
   </div>
 
   <div class="configuration-content">
@@ -9,16 +9,19 @@
     <div class="section">
       <div class="section-header">
         <h2>Entities</h2>
-        <button class="btn btn-sm btn-primary" (click)="newEntity = {}">Add Entity</button>
       </div>
 
       <!-- New Entity Form -->
-      <div class="form-container" *ngIf="newEntity">
+      <div class="form-container">
         <form (ngSubmit)="addNewEntity()" class="compact-form">
           <div class="form-row">
             <input type="text" [(ngModel)]="newEntity.name" name="newEntityName" placeholder="Entity Name" required>
             <input type="number" [(ngModel)]="newEntity.parentId" name="newEntityParentId" placeholder="Parent ID">
+            <input type="text" [(ngModel)]="newEntity.description" name="newEntityDescription" placeholder="Description">
             <button type="submit" class="btn btn-sm btn-success">Add</button>
+          </div>
+          <div class="error-message" *ngIf="!isValidParentId(newEntity.parentId)">
+            {{getParentIdError(newEntity.parentId)}}
           </div>
         </form>
       </div>
@@ -41,6 +44,7 @@
               <div class="item-details">
                 <span class="detail">ID: {{entity.id}}</span>
                 <span class="detail">Parent: {{entity.parentId || 'None'}}</span>
+                <span class="detail" *ngIf="entity.description">Description: {{entity.description}}</span>
               </div>
             </div>
 
@@ -50,10 +54,14 @@
                 <div class="form-row">
                   <input type="text" [ngModel]="getEditingEntityName()" (ngModelChange)="setEditingEntityName($event)" name="name" required>
                   <input type="number" [ngModel]="getEditingEntityParentId()" (ngModelChange)="setEditingEntityParentId($event)" name="parentId">
+                  <input type="text" [ngModel]="getEditingEntityDescription()" (ngModelChange)="setEditingEntityDescription($event)" name="description" placeholder="Description">
                   <div class="form-actions">
-                    <button type="submit" class="btn btn-sm btn-success">Save</button>
+                    <button type="submit" class="btn btn-sm btn-success" [disabled]="!isValidParentId(getEditingEntityParentId())">Save</button>
                     <button type="button" class="btn btn-sm btn-secondary" (click)="cancelEditEntity()">Cancel</button>
                   </div>
+                </div>
+                <div class="error-message" *ngIf="!isValidParentId(getEditingEntityParentId())">
+                  {{getParentIdError(getEditingEntityParentId())}}
                 </div>
               </form>
             </div>
@@ -66,11 +74,10 @@
     <div class="section" *ngIf="selectedEntity">
       <div class="section-header">
         <h2>Fields for {{selectedEntity.name}}</h2>
-        <button class="btn btn-sm btn-primary" (click)="newField = {}">Add Field</button>
       </div>
 
       <!-- New Field Form -->
-      <div class="form-container" *ngIf="newField">
+      <div class="form-container">
         <form (ngSubmit)="addNewField()" class="compact-form">
           <div class="form-row">
             <input type="text" [(ngModel)]="newField.fieldName" name="newFieldName" placeholder="Field Name" required>
@@ -80,6 +87,7 @@
               <option value="boolean">Boolean</option>
               <option value="date">Date</option>
             </select>
+            <input type="text" [(ngModel)]="newField.description" name="newFieldDescription" placeholder="Description">
             <div class="checkbox-container">
               <input type="checkbox" [(ngModel)]="newField.isRequired" name="newFieldRequired">
               <label>Required</label>
@@ -106,6 +114,7 @@
               <div class="item-details">
                 <span class="detail">Type: {{field.dataType}}</span>
                 <span class="detail">Required: {{field.isRequired ? 'Yes' : 'No'}}</span>
+                <span class="detail" *ngIf="field.description">Description: {{field.description}}</span>
               </div>
             </div>
 
@@ -120,6 +129,7 @@
                     <option value="boolean">Boolean</option>
                     <option value="date">Date</option>
                   </select>
+                  <input type="text" [ngModel]="getEditingFieldDescription()" (ngModelChange)="setEditingFieldDescription($event)" name="description" placeholder="Description">
                   <div class="checkbox-container">
                     <input type="checkbox" [ngModel]="getEditingFieldIsRequired()" (ngModelChange)="setEditingFieldIsRequired($event)" name="isRequired">
                     <label>Required</label>

@@ -165,6 +165,10 @@ export class ConfigurationComponent implements OnInit {
     return this.editingEntity?.parentId || null;
   }
 
+  getEditingEntityDescription(): string {
+    return this.editingEntity?.description || '';
+  }
+
   getEditingFieldName(): string {
     return this.editingField?.fieldName || '';
   }
@@ -177,6 +181,10 @@ export class ConfigurationComponent implements OnInit {
     return this.editingField?.isRequired || false;
   }
 
+  getEditingFieldDescription(): string {
+    return this.editingField?.description || '';
+  }
+
   // Safe setters for template bindings
   setEditingEntityName(value: string): void {
     if (this.editingEntity) {
@@ -187,6 +195,12 @@ export class ConfigurationComponent implements OnInit {
   setEditingEntityParentId(value: number | null): void {
     if (this.editingEntity) {
       this.editingEntity.parentId = value;
+    }
+  }
+
+  setEditingEntityDescription(value: string): void {
+    if (this.editingEntity) {
+      this.editingEntity.description = value;
     }
   }
 
@@ -206,5 +220,25 @@ export class ConfigurationComponent implements OnInit {
     if (this.editingField) {
       this.editingField.isRequired = value;
     }
+  }
+
+  setEditingFieldDescription(value: string): void {
+    if (this.editingField) {
+      this.editingField.description = value;
+    }
+  }
+
+  // Validation methods
+  isValidParentId(parentId: number | null | undefined): boolean {
+    if (parentId === null || parentId === undefined) return true;
+    return this.entities.some(entity => entity.id === parentId);
+  }
+
+  getParentIdError(parentId: number | null | undefined): string {
+    if (parentId === null || parentId === undefined) return '';
+    if (!this.isValidParentId(parentId)) {
+      return 'Parent ID must be empty or match an existing entity ID';
+    }
+    return '';
   }
 } 
