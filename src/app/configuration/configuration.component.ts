@@ -17,9 +17,9 @@ export class ConfigurationComponent implements OnInit {
   entityFields: EntityField[] = [];
   selectedEntity: Entity | null = null;
   editingEntity: Entity | null = null;
-  editingField: EntityField | null = null;
   newEntity: Partial<Entity> = {};
   newField: Partial<EntityField> = {};
+  editingFields: { [key: number]: EntityField } = {};
 
   constructor(private configService: ConfigurationService) {}
 
@@ -30,12 +30,24 @@ export class ConfigurationComponent implements OnInit {
   loadData(): void {
     this.entities = this.configService.getEntities();
     this.entityFields = this.configService.getEntityFields();
+    this.initializeEditingFields();
+  }
+
+  initializeEditingFields(): void {
+    this.editingFields = {};
+    if (this.selectedEntity) {
+      this.entityFields
+        .filter(f => f.entityId === this.selectedEntity!.id)
+        .forEach(field => {
+          this.editingFields[field.id] = { ...field };
+        });
+    }
   }
 
   selectEntity(entity: Entity): void {
     this.selectedEntity = entity;
     this.editingEntity = null;
-    this.editingField = null;
+    this.initializeEditingFields();
   }
 
   startEditEntity(entity: Entity): void {
@@ -91,23 +103,29 @@ export class ConfigurationComponent implements OnInit {
     }
   }
 
-  startEditField(field: EntityField): void {
-    this.editingField = { ...field };
+  saveAllFields(): void {
+    const updatedFields = this.entityFields.map(field => {
+      if (this.editingFields[field.id]) {
+        return this.editingFields[field.id];
+      }
+      return field;
+    });
+
+    this.configService.updateEntityFields(updatedFields);
+    this.entityFields = updatedFields;
   }
 
-  saveField(): void {
-    if (this.editingField) {
-      const updatedFields = this.entityFields.map(f => 
-        f.id === this.editingField!.id ? this.editingField! : f
-      );
-      this.configService.updateEntityFields(updatedFields);
-      this.entityFields = updatedFields;
-      this.editingField = null;
+  cancelFieldEdits(): void {
+    this.initializeEditingFields();
+  }
+
+  updateFieldProperty(fieldId: number, property: keyof EntityField, value: any): void {
+    if (this.editingFields[fieldId]) {
+      this.editingFields[fieldId] = {
+        ...this.editingFields[fieldId],
+        [property]: value
+      };
     }
-  }
-
-  cancelEditField(): void {
-    this.editingField = null;
   }
 
   addNewField(): void {
@@ -125,6 +143,7 @@ export class ConfigurationComponent implements OnInit {
       const updatedFields = [...this.entityFields, newField];
       this.configService.updateEntityFields(updatedFields);
       this.entityFields = updatedFields;
+      this.editingFields[newField.id] = { ...newField };
       this.newField = {};
     }
   }
@@ -134,6 +153,7 @@ export class ConfigurationComponent implements OnInit {
       const updatedFields = this.entityFields.filter(f => f.id !== field.id);
       this.configService.updateEntityFields(updatedFields);
       this.entityFields = updatedFields;
+      delete this.editingFields[field.id];
     }
   }
 
@@ -142,7 +162,6 @@ export class ConfigurationComponent implements OnInit {
     this.loadData();
     this.selectedEntity = null;
     this.editingEntity = null;
-    this.editingField = null;
     this.newEntity = {};
     this.newField = {};
   }
@@ -152,11 +171,6 @@ export class ConfigurationComponent implements OnInit {
     return this.editingEntity;
   }
 
-  getEditingField(): EntityField | null {
-    return this.editingField;
-  }
-
-  // Safe getters for template bindings
   getEditingEntityName(): string {
     return this.editingEntity?.name || '';
   }
@@ -167,22 +181,6 @@ export class ConfigurationComponent implements OnInit {
 
   getEditingEntityDescription(): string {
     return this.editingEntity?.description || '';
-  }
-
-  getEditingFieldName(): string {
-    return this.editingField?.fieldName || '';
-  }
-
-  getEditingFieldDataType(): string {
-    return this.editingField?.dataType || 'string';
-  }
-
-  getEditingFieldIsRequired(): boolean {
-    return this.editingField?.isRequired || false;
-  }
-
-  getEditingFieldDescription(): string {
-    return this.editingField?.description || '';
   }
 
   // Safe setters for template bindings
@@ -201,30 +199,6 @@ export class ConfigurationComponent implements OnInit {
   setEditingEntityDescription(value: string): void {
     if (this.editingEntity) {
       this.editingEntity.description = value;
-    }
-  }
-
-  setEditingFieldName(value: string): void {
-    if (this.editingField) {
-      this.editingField.fieldName = value;
-    }
-  }
-
-  setEditingFieldDataType(value: string): void {
-    if (this.editingField) {
-      this.editingField.dataType = value;
-    }
-  }
-
-  setEditingFieldIsRequired(value: boolean): void {
-    if (this.editingField) {
-      this.editingField.isRequired = value;
-    }
-  }
-
-  setEditingFieldDescription(value: string): void {
-    if (this.editingField) {
-      this.editingField.description = value;
     }
   }
 

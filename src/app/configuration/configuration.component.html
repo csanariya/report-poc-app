@@ -37,6 +37,7 @@
               <div class="item-header">
                 <span class="name">{{entity.name}}</span>
                 <div class="actions">
+                  <button class="btn btn-sm btn-outline-primary" (click)="selectEntity(entity)">Fields</button>
                   <button class="btn btn-sm btn-outline-primary" (click)="startEditEntity(entity)">Edit</button>
                   <button class="btn btn-sm btn-outline-danger" (click)="deleteEntity(entity)">Delete</button>
                 </div>
@@ -102,47 +103,46 @@
         <div *ngFor="let field of entityFields | filterByEntityId:selectedEntity.id" 
              class="item">
           <div class="item-content">
-            <!-- Field Display -->
-            <div class="item-display" *ngIf="editingField?.id !== field.id">
-              <div class="item-header">
-                <span class="name">{{field.fieldName}}</span>
-                <div class="actions">
-                  <button class="btn btn-sm btn-outline-primary" (click)="startEditField(field)">Edit</button>
-                  <button class="btn btn-sm btn-outline-danger" (click)="deleteField(field)">Delete</button>
-                </div>
-              </div>
-              <div class="item-details">
-                <span class="detail">Type: {{field.dataType}}</span>
-                <span class="detail">Required: {{field.isRequired ? 'Yes' : 'No'}}</span>
-                <span class="detail" *ngIf="field.description">Description: {{field.description}}</span>
+            <div class="item-header">
+              <input type="text" 
+                     [value]="editingFields[field.id].fieldName" 
+                     (input)="updateFieldProperty(field.id, 'fieldName', $any($event.target).value)"
+                     class="field-input">
+              <div class="actions">
+                <button class="btn btn-sm btn-outline-danger" (click)="deleteField(field)">Delete</button>
               </div>
             </div>
-
-            <!-- Field Edit Form -->
-            <div class="item-edit" *ngIf="editingField?.id === field.id">
-              <form (ngSubmit)="saveField()" class="compact-form">
-                <div class="form-row">
-                  <input type="text" [ngModel]="getEditingFieldName()" (ngModelChange)="setEditingFieldName($event)" name="fieldName" required>
-                  <select [ngModel]="getEditingFieldDataType()" (ngModelChange)="setEditingFieldDataType($event)" name="dataType">
-                    <option value="string">String</option>
-                    <option value="number">Number</option>
-                    <option value="boolean">Boolean</option>
-                    <option value="date">Date</option>
-                  </select>
-                  <input type="text" [ngModel]="getEditingFieldDescription()" (ngModelChange)="setEditingFieldDescription($event)" name="description" placeholder="Description">
-                  <div class="checkbox-container">
-                    <input type="checkbox" [ngModel]="getEditingFieldIsRequired()" (ngModelChange)="setEditingFieldIsRequired($event)" name="isRequired">
-                    <label>Required</label>
-                  </div>
-                  <div class="form-actions">
-                    <button type="submit" class="btn btn-sm btn-success">Save</button>
-                    <button type="button" class="btn btn-sm btn-secondary" (click)="cancelEditField()">Cancel</button>
-                  </div>
-                </div>
-              </form>
+            <div class="item-details">
+              <select [value]="editingFields[field.id].dataType"
+                      (change)="updateFieldProperty(field.id, 'dataType', $any($event.target).value)"
+                      class="field-input">
+                <option value="string">String</option>
+                <option value="number">Number</option>
+                <option value="boolean">Boolean</option>
+                <option value="date">Date</option>
+              </select>
+              <input type="text" 
+                     [value]="editingFields[field.id].description"
+                     (input)="updateFieldProperty(field.id, 'description', $any($event.target).value)"
+                     placeholder="Description"
+                     class="field-input">
+              <div class="checkbox-container">
+                <input type="checkbox" 
+                       [checked]="editingFields[field.id].isRequired"
+                       (change)="updateFieldProperty(field.id, 'isRequired', $any($event.target).checked)">
+                <label>Required</label>
+              </div>
             </div>
           </div>
         </div>
+        
+        <div class="section-header">
+          <div class="field-actions">
+            <button class="btn btn-sm btn-success" (click)="saveAllFields()">Save All Changes</button>
+            <button class="btn btn-sm btn-secondary" (click)="cancelFieldEdits()">Cancel Changes</button>
+          </div>
+        </div>
+        
       </div>
     </div>
   </div>
