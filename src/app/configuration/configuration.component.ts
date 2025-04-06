@@ -166,6 +166,21 @@ export class ConfigurationComponent implements OnInit {
     this.newField = {};
   }
 
+  downloadData(): void {
+    const content = `export const ENTITIES_DATA = ${JSON.stringify(this.entities, null, 2)};\n\n` +
+                   `export const ENTITY_FIELDS_DATA = ${JSON.stringify(this.entityFields, null, 2)};`;
+    
+    const blob = new Blob([content], { type: 'text/typescript' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'entity-data.ts';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  }
+
   // Helper methods to safely access editing objects
   getEditingEntity(): Entity | null {
     return this.editingEntity;

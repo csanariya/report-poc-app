@@ -1,7 +1,10 @@
 <div class="configuration-container">
   <div class="header">
     <h1>Configuration</h1>
-    <button class="btn btn-outline-danger" (click)="resetToDefault()">Reset to Default</button>
+    <div class="header-actions">
+      <button class="btn btn-outline-primary" (click)="downloadData()">Download</button>
+      <button class="btn btn-outline-danger" (click)="resetToDefault()">Reset to Default</button>
+    </div>
   </div>
 
   <div class="configuration-content">
