@@ -71,13 +71,23 @@ export class CreateReportComponent implements OnInit {
   getSampleValue(field: EntityField): string {
     switch (field.dataType.toLowerCase()) {
       case 'string':
-        return 'Text';
+        return 'Sample';
+      case 'text':
+        return 'Sample that is longer.';
       case 'number':
         return '123';
+      case 'decimal':
+        return '123.45';
+      case 'datetime':
+        return new Date().toLocaleString();
       case 'date':
         return new Date().toLocaleDateString();
       case 'boolean':
-        return 'Yes';
+        return 'Yes'; 
+      case 'bit':
+        return '4';
+      case 'blob':
+        return '{id:1, name:"Sample blob"}';
       default:
         return 'Value';
     }

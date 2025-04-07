@@ -94,9 +94,14 @@
             <input type="text" [(ngModel)]="newField.fieldName" name="newFieldName" placeholder="Field Name" required>
             <select [(ngModel)]="newField.dataType" name="newFieldType">
               <option value="string">String</option>
+              <option value="text">Text</option>
               <option value="number">Number</option>
+              <option value="decimal">Decimal</option>
               <option value="boolean">Boolean</option>
               <option value="date">Date</option>
+              <option value="datetime">Date Time</option>
+              <option value="bit">Bit</option>
+              <option value="blob">Blob</option>
             </select>
             <input type="text" [(ngModel)]="newField.description" name="newFieldDescription" placeholder="Description">
             <div class="checkbox-container">
@@ -127,9 +132,14 @@
                       (change)="updateFieldProperty(field.id, 'dataType', $any($event.target).value)"
                       class="field-input">
                 <option value="string">String</option>
+                <option value="text">Text</option>
                 <option value="number">Number</option>
+                <option value="decimal">Decimal</option>
                 <option value="boolean">Boolean</option>
                 <option value="date">Date</option>
+                <option value="datetime">Date Time</option>
+                <option value="bit">Bit</option>
+                <option value="blob">Blob</option>
               </select>
               <input type="text" 
                      [value]="editingFields[field.id].description"
