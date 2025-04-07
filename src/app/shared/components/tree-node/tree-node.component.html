@@ -1,0 +1,42 @@
+<div class="tree-node" [style.--level]="level">
+  <div class="entity-item">
+    <span class="toggle-icon" (click)="toggleLocalNode()">
+      {{ hasChildren ? (isExpanded ? '▼' : '▶') : '⬤' }}
+    </span>
+    <span class="level-label">
+      {{ getLevelLabel(level) }}
+    </span>
+    <span class="entity-name">{{ node.entity.name }}</span>
+    <button class="toggle-fields-btn" (click)="toggleLocalFields()">
+      {{ isFieldsExpanded ? 'Hide Fields' : 'Show Fields' }}
+    </button>
+  </div>
+
+  <div class="fields-section" *ngIf="isFieldsExpanded">
+    <div class="field-item" *ngFor="let field of node.entity.fields">
+      <span class="field-name">{{ field.fieldName }}</span>
+      <span class="badge" [attr.data-type]="field.dataType">{{ field.dataType }}</span>
+      <span class="badge" [attr.data-optional]="field.isRequired">{{ field.isRequired ? 'Required' : 'Optional' }}</span>
+      <button 
+        *ngIf="showColumnButtons"
+        class="add-column-btn" 
+        [class.remove-column-btn]="isColumnSelected(field)"
+        (click)="toggleColumn(field)">
+        {{ isColumnSelected(field) ? 'x' : '+' }}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isExpanded && node.children">
+    <ng-container *ngFor="let child of node.children">
+      <app-tree-node
+        [node]="child"
+        [level]="level + 1"
+        [selectedColumns]="selectedColumns"
+        [showColumnButtons]="showColumnButtons"
+        (addColumn)="addColumn.emit($event)"
+        (removeColumn)="removeColumn.emit($event)">
+      </app-tree-node>
+    </ng-container>
+  </div>
+</div> 
