@@ -7,12 +7,12 @@ import { Entity, EntityField, TreeNode, SelectedColumn } from '../../models/enti
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="tree-node">
+    <div class="tree-node" [style.--level]="level">
       <div class="entity-item">
         <span class="toggle-icon" (click)="toggleLocalNode()">
           {{ hasChildren ? (isExpanded ? '▼' : '▶') : '⬤' }}
         </span>
-        <span class="level-label" [style.color]="getLevelColor(level)">
+        <span class="level-label">
           {{ getLevelLabel(level) }}
         </span>
         <span class="entity-name">{{ node.entity.name }}</span>
@@ -97,18 +97,5 @@ export class TreeNodeComponent {
 
   getLevelLabel(level: number): string {
     return `L${level}`;
-  }
-
-  getLevelColor(level: number): string {
-    const colors = [
-      '#000000', // Level 1 - Black
-      '#2E7D32', // Level 2 - Green
-      '#1976D2', // Level 3 - Blue
-      '#9C27B0', // Level 4 - Purple
-      '#F57C00', // Level 5 - Orange
-      '#D32F2F', // Level 6 - Red
-      '#455A64'  // Level 7 - Dark Grey
-    ];
-    return colors[level - 1] || '#000000';
   }
 } 

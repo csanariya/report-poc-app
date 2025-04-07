@@ -1,11 +1,35 @@
+// Level colors in rainbow order
+$level-colors-dark: (
+  1: #a32929,
+  2: #a39729,
+  3: #41a329,
+  4: #29a37e,
+  5: #295aa3,
+  6: #6629a3,
+  7: #a32972
+);
+
+// Light background colors in rainbow order
+$level-colors-light: (
+  1: #f5d6d6,
+  2: #f5f2d6,
+  3: #dcf5d6,
+  4: #d6f5ec,
+  5: #d6e2f5,
+  6: #e6d6f5,
+  7: #f5d6e9
+);
+
 .tree-view {
   margin-top: 1rem;
+  position: relative;
 }
 
 .tree-node {
   margin: 0.5rem 0;
-  padding-left: 1rem;
-  border-left: 1px solid #e9ecef;
+  padding-left: 0.75rem;
+  //border-left: 1px solid #e9ecef;
+  position: relative;
 }
 
 .entity-item {
@@ -15,11 +39,34 @@
   border-radius: 4px;
   background-color: #f8f9fa;
   margin-bottom: 0.5rem;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 
   &:hover {
     background-color: #e9ecef;
   }
+}
+
+// Add sticky positioning for different levels
+@for $i from 1 through 7 {
+  .tree-node[style*="--level: #{$i}"] {
+    
+    border-left: 2px dotted map-get($level-colors-dark, $i);
+
+    .entity-item {
+      top: ($i - 1) * 2.5rem;
+      z-index: 8 - $i;
+      background-color: map-get($level-colors-light, $i);
+      border: 1px dotted map-get($level-colors-dark, $i);
+    }
+
+    .level-label {
+      color: black;
+      font-weight: bolder; // map-get($level-colors-dark, $i);
+    }
+  }
+  
 }
 
 .toggle-icon {
@@ -61,7 +108,7 @@
   margin-left: 1rem;
   margin-bottom: 0.5rem;
   padding-left: 1rem;
-  border-left: 1px dashed #e9ecef;
+  border-left: 1px solid #b7b7b7;
 }
 
 .field-item {
