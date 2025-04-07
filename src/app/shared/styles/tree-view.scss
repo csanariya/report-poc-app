@@ -1,3 +1,5 @@
+@use "sass:map";
+
 // Level colors in rainbow order
 $level-colors-dark: (
   1: #a32929,
@@ -52,18 +54,18 @@ $level-colors-light: (
 @for $i from 1 through 7 {
   .tree-node[style*="--level: #{$i}"] {
     
-    border-left: 2px dotted map-get($level-colors-dark, $i);
+    border-left: 2px dotted map.get($level-colors-dark, $i);
 
     .entity-item {
       top: ($i - 1) * 2.5rem;
       z-index: 8 - $i;
-      background-color: map-get($level-colors-light, $i);
-      border: 1px dotted map-get($level-colors-dark, $i);
+      background-color: map.get($level-colors-light, $i);
+      border: 1px dotted map.get($level-colors-dark, $i);
     }
 
     .level-label {
       color: black;
-      font-weight: bolder; // map-get($level-colors-dark, $i);
+      font-weight: bolder; // map.get($level-colors-dark, $i);
     }
   }
   
